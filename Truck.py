@@ -13,7 +13,7 @@ class Truck:
         :param str time: current time
         :param str time_left_hub: time that the truck left the hub
         :param int capacity: maximum number of packages that the truck can hold
-        :param float speed: truck speed in miles per hour
+        :param int speed: truck speed in miles per hour
         :param int load: current number of packages on truck
         :param Package packages: array of packages currently on truck
         :returns None
