@@ -19,7 +19,7 @@ class Package:
         :param str status: delivery status
         :returns None
         """
-        self.pId = package_id
+        self.package_id = package_id
         self.address = address
         self.city = city
         self.state = state
@@ -38,4 +38,4 @@ class Package:
         :rtype str
         """
         return ('Package ID: %d Address: %s %s %s %s Deadline: %s Weight: %.2f Status: %s' %
-                (self.pId, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight, self.status))
+                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight, self.status))
