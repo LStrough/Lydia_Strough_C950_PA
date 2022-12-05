@@ -34,13 +34,11 @@ class ChainingHashTable:
         bucket_list = self.table[bucket]
 
         # search for the key in the bucket list
-        if key in bucket_list:
-            # find the item's index and return the item that is in the bucket list.
-            item_index = bucket_list.index(key)
-            return bucket_list[item_index]
-        else:
-            # the key is not found.
-            return None
+        for kv in bucket_list:
+            if kv[0] == key:
+                return kv[1]
+        # the key is not found.
+        return None
 
     # Removes an item with matching key from the hash table.
     def remove(self, key):

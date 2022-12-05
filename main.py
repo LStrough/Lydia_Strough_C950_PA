@@ -7,7 +7,6 @@ from Package import Package
 def load_package_data(fileName):
     with open(fileName) as packages:
         packageData = csv.reader(packages, delimiter=',')
-        next(packageData)
         for package in packageData:
             pID = int(package[0])
             address = package[1]
@@ -29,10 +28,11 @@ def load_package_data(fileName):
 pHashTable = HashTable.ChainingHashTable()
 
 # Load packages to Hash Table
-load_package_data('WGUPS Package File.csv')                 # Bug! package 1 is not loading
+load_package_data('WGUPS Package File.csv')
 
 # Print Hash Table
-# print(pHashTable.table)
+# print(pHashTable.table)  # format print function for Hash Table
 
 # Print Hash Table kv
-# print(pHashTable.search(2))                                 # Bug! unable to print specific objects from hashTable
+myPackage = pHashTable.search(2)
+print(myPackage)
