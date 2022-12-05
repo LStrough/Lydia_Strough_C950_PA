@@ -32,7 +32,6 @@ def print_package_table(hashTable):
 def load_address_data(fileName):
     with open(fileName) as AddressFile:
         addresses = csv.reader(AddressFile, delimiter=",")
-
         for address in addresses:
             addressData.append(address[2])
 
@@ -41,6 +40,23 @@ def print_address_data(addresses):
     for i in range(len(addresses)):
         value = addresses[i]
         print('Address %d: %s' % (i, value))
+
+    """
+      for address in addresses:
+        print(address)
+    """
+
+
+def load_distance_data(fileName):
+    with open(fileName) as DistanceFile:
+        distances = csv.reader(DistanceFile, delimiter=",")
+        for distance in distances:
+            distanceData.append(distance)
+
+
+def print_distance_data(distances):
+    for distance in distances:
+        print(distance)
 
 
 # Hash table instance
@@ -66,4 +82,15 @@ addressData = []
 load_address_data('WGUPS Address File.csv')
 
 # Print Address List
-#print_address_data(addressData)
+# print_address_data(addressData)
+
+# Distance List instance
+distanceData = []
+
+# Load Distances to 2-D List
+load_distance_data('WGUPS Distance Table.csv')
+# print(distanceData)
+
+# Print Distance List
+# print_distance_data(distanceData)
+print(distanceData[26][1])
