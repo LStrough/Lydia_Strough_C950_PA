@@ -47,5 +47,12 @@ class ChainingHashTable:
         bucket_list = self.table[bucket]
 
         # remove the item from the bucket list if it is present.
-        if key in bucket_list:
-            bucket_list.remove(key)
+        for kv in bucket_list:
+            # print (key_value)
+            if kv[0] == key:
+                bucket_list.remove([kv[0], kv[1]])
+                return print('Package ', key, 'successfully deleted.')
+        # the key is not found.
+        return None
+
+
