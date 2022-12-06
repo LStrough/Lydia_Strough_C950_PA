@@ -41,11 +41,6 @@ def print_address_data(addresses):
         value = addresses[i]
         print('Address %d: %s' % (i, value))
 
-    """
-      for address in addresses:
-        print(address)
-    """
-
 
 def load_distance_data(fileName):
     with open(fileName) as DistanceFile:
@@ -66,23 +61,7 @@ pHashTable = HashTable.ChainingHashTable()
 load_package_data('WGUPS Package File.csv')
 
 # Print Hash Table
-# print_formatted_table(pHashTable)
-
-# Print Hash Table kv
-# myPackage = pHashTable.search(2)
-# print(myPackage)
-
-# pHashTable.remove(2)
-# print_formatted_table(pHashTable)
-
-# Address List instance
-addressData = []
-
-# Load addresses to List
-load_address_data('WGUPS Address File.csv')
-
-# Print Address List
-# print_address_data(addressData)
+# print_package_table(pHashTable)
 
 # Distance List instance
 distanceData = []
@@ -93,4 +72,17 @@ load_distance_data('WGUPS Distance Table.csv')
 
 # Print Distance List
 # print_distance_data(distanceData)
-print(distanceData[26][1])
+# print(distanceData[26][3])
+
+# Address List instance
+addressData = []
+
+# Load addresses to List
+load_address_data('WGUPS Address File.csv')
+
+# Print Address List
+# print_address_data(addressData)
+
+
+
+
