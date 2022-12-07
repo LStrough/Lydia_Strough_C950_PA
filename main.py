@@ -10,11 +10,11 @@ distanceData = []
 addressData = []
 
 # Truck 1 instance
-truck1 = Truck.Truck('At the hub', '', '', 16, 18, 0, [4, 11])
+truck1 = Truck.Truck('4001 South 700 East', '', '', 16, 18, 0, [4, 11])
 # Truck 2 instance
-truck2 = Truck.Truck('At the hub', '', '', 16, 18, 0, [3, 8])
+truck2 = Truck.Truck('4001 South 700 East', '', '', 16, 18, 0, [3, 8])
 # Truck 3 instance
-truck3 = Truck.Truck('At the hub', '', '', 16, 18, 0, [1, 2])
+truck3 = Truck.Truck('4001 South 700 East', '', '', 16, 18, 0, [1, 2])
 
 
 def distance_in_between(add1, add2):  # str values
@@ -28,20 +28,19 @@ def distance_in_between(add1, add2):  # str values
     return float(distance)
 
 
-"""
 def min_distance_from(currAddress, packageList):
     minDistance = 1000
     nextAddress = ''
     nextId = 0
     for package in packageList:
-
-        distance = distance_in_between(currAddress, nextAddress)
+        address2 = package.address
+        distance = distance_in_between(currAddress, address2)
         if distance < minDistance:
             minDistance = distance
-
+            nextAddress = address2
+            nextId = package.package_id
     print('Minimum distance address:', nextAddress, '(', minDistance, ')', 'Package:', nextId)
     return nextAddress, nextId, minDistance
-"""
 
 
 def main():
@@ -63,7 +62,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
