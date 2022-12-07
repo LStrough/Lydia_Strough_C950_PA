@@ -18,10 +18,10 @@ class Truck:
         :param Package packages: array of packages currently on truck
         :returns None
         """
-        self.location = location
+        self.location = location  # hard code to hub
         self.time = time
         self.timeLeftHub = time_left_hub
         self.capacity = capacity
         self.speed = speed
         self.load = load
-        self.packages = packages  # array of packages
+        self.packages = packages  # array of package ID's
