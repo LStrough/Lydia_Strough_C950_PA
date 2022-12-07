@@ -23,5 +23,5 @@ class Truck:
         self.timeLeftHub = time_left_hub
         self.capacity = capacity
         self.speed = speed
-        self.load = load
+        self.load = len(packages)
         self.packages = packages

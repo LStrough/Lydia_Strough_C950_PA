@@ -60,14 +60,28 @@ def main():
 
     # Instantiate Truck Objects
     hub = '4001 South 700 East'
-    list1 = [1, 2, 3]
+    list1 = []
     list2 = []
     list3 = []
-    truck1 = Truck.Truck(hub, timeObject, '', 16, 18, len(list1), list1)
-    truck2 = Truck.Truck(hub, timeObject, '', 16, 18, len(list2), list2)
-    truck3 = Truck.Truck(hub, timeObject, '', 16, 18, len(list3), list3)
+    truck1 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list1)
+    truck2 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list2)
+    truck3 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list3)
 
-    min_distance_from(truck1.location, truck1.packages, pHashTable, addressData, distanceData)
+    # DELIVERY CONSTRAINTS
+    # Can only be on truck 2: 3, 18, 36, 38
+    # Must be on the SAME truck: 13, 14, 15, 16, 19, 28
+    # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
+    # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
+
+    # Load Packages to Trucks
+    list1 = []
+    list2 = [3, 18, 36, 38]
+    list3 = []
+    truck1.packages = list1
+    truck2.packages = list2
+    truck3.packages = list3
+
+    # min_distance_from(truck1.location, truck1.packages, pHashTable, addressData, distanceData)
 
 
 if __name__ == '__main__':
