@@ -19,6 +19,7 @@ def min_distance_from(currAddress, packageList, pHashTable, addressData, distanc
     minDistance = 1000
     nextAddress = ''
     nextId = 0
+    print('Determining Closest Address!')
     for pkgId in packageList:
         pkg = pHashTable.search(pkgId)
         address2 = pkg.address
@@ -29,7 +30,51 @@ def min_distance_from(currAddress, packageList, pHashTable, addressData, distanc
             nextAddress = address2  # new min address
             nextId = pkg.package_id  # new package ID
     print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (nextId, nextAddress, minDistance))
+    print()
     return nextAddress, nextId, minDistance
+
+
+def load_truck_packages(truck1, truck2, truck3):
+    # DELIVERY CONSTRAINTS
+    # Can only be on truck 2: 3, 18, 36, 38
+    # Must be on the SAME truck: 13, 14, 15, 16, 19, 28
+    # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
+    # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
+
+    # Manually Load Packages to Trucks
+    list1 = []
+    list2 = [3, 18, 36, 38]
+    list3 = []
+    truck1.packages = list1
+    truck2.packages = list2
+    truck3.packages = list3
+
+    print('Truck 1 is Loaded:', list1)
+    print('Truck 2 is Loaded:', list2)
+    print('Truck 3 is Loaded:', list3)
+    print()
+
+
+def deliver_truck_packages(truck, pHashTable, addressData, distanceData):
+    delivered = []
+    not_delivered = truck.packages
+    currAddress = truck.location
+    distanceTraveled = 0
+    while len(not_delivered) > 0:
+        for pkg in not_delivered:
+            print('Delivered:', delivered)
+            print('Not Delivered:', not_delivered)
+            address, id, miles = min_distance_from(currAddress, not_delivered, pHashTable, addressData, distanceData)
+            currAddress = address
+            distanceTraveled += miles
+            delivered.append(id)
+            not_delivered.remove(id)
+            # truck.packages.remove(id)
+    print('Delivery Completed!')
+    print('Delivered:', delivered)
+    print('Not Delivered:', not_delivered)
+    # print('Not Delivered:', truck.packages)
+    return distanceTraveled
 
 
 def main():
@@ -53,7 +98,7 @@ def main():
     readCSV.load_address_data('WGUPS Address File.csv', addressData)
     # print(addressData)
 
-    # time object
+    # Time Object
     startTime = '08:00:00'
     h, m, s = startTime.split(':')
     timeObject = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
@@ -67,21 +112,13 @@ def main():
     truck2 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list2)
     truck3 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list3)
 
-    # DELIVERY CONSTRAINTS
-    # Can only be on truck 2: 3, 18, 36, 38
-    # Must be on the SAME truck: 13, 14, 15, 16, 19, 28
-    # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
-    # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
-
     # Load Packages to Trucks
-    list1 = []
-    list2 = [3, 18, 36, 38]
-    list3 = []
-    truck1.packages = list1
-    truck2.packages = list2
-    truck3.packages = list3
+    print('Loading Packages!')
+    load_truck_packages(truck1, truck2, truck3)
 
-    # min_distance_from(truck1.location, truck1.packages, pHashTable, addressData, distanceData)
+    # Deliver Truck Packages
+    print('Delivery Started!')
+    print('Truck 2 miles:', deliver_truck_packages(truck2, pHashTable, addressData, distanceData))
 
 
 if __name__ == '__main__':
