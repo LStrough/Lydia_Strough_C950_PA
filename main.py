@@ -70,6 +70,7 @@ def deliver_truck_packages(truck, pHashTable, addressData, distanceData):
             delivered.append(id)
             not_delivered.remove(id)
             # truck.packages.remove(id)
+    # truck.mileage = distanceTraveled
     print('Delivery Completed!')
     print('Delivered:', delivered)
     print('Not Delivered:', not_delivered)
