@@ -10,18 +10,18 @@ class Truck:
         Truck constructor.
 
         :param str location: current truck location
-        :param str time: current time
-        :param str time_left_hub: time that the truck left the hub
+        :param timedelta time: current time
+        :param timedelta time_left_hub: time that the truck left the hub
         :param int capacity: maximum number of packages that the truck can hold
         :param int speed: truck speed in miles per hour
         :param int load: current number of packages on truck
-        :param Package packages: array of packages currently on truck
+        :param list packages: array of packages (package ID's) currently on truck
         :returns None
         """
-        self.location = location  # hard code to hub
+        self.location = location
         self.time = time
         self.timeLeftHub = time_left_hub
         self.capacity = capacity
         self.speed = speed
         self.load = load
-        self.packages = packages  # array of package ID's
+        self.packages = packages
