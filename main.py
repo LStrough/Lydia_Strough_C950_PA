@@ -37,8 +37,8 @@ def min_distance_from(currAddress, packageList):
         distance = distance_in_between(currAddress, address2)
         if distance < minDistance:
             minDistance = distance
-            nextAddress = address2
-            nextId = package.package_id
+            nextAddress = address2  # address associated with new minimum distance
+            nextId = package.package_id  # package id associated with minimum address
     print('Minimum distance address:', nextAddress, '(', minDistance, ')', 'Package:', nextId)
     return nextAddress, nextId, minDistance
 
@@ -59,6 +59,7 @@ def main():
     # readCSV.print_address_data(addressData)
     # print(addressData)
 
+    min_distance_from('4001 South 700 East', truck1.packages)
 
 if __name__ == '__main__':
     main()
