@@ -25,3 +25,16 @@ class Truck:
         self.speed = speed
         self.mileage = mileage
         self.packages = packages
+
+    def __str__(self):
+        """
+        Truck string method.
+
+        This method provides default syntax for Truck information (converts hashcode to string).
+
+        :returns the truck description
+        :rtype str
+        """
+        return ('Truck location: %s, Current time: %s, Time Left Hub: %s, Capacity: %d, Speed: %d, Mileage: %.2f, '
+                'Packages: %s ' %
+                (self.location, self.time, self.timeLeftHub, self.capacity, self.speed, self.mileage, self.packages))

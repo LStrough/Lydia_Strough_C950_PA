@@ -25,7 +25,14 @@ def min_distance_from(currAddress, packageList, pHashTable, addressData, distanc
         address2 = pkg.address
         distance = distance_in_between(currAddress, address2, addressData, distanceData)
         print('Package ID: %d Distance: %.1f' % (pkgId, distance))
-        if distance < minDistance:
+        if distance == 0:
+            minDistance = distance  # new min distance
+            nextAddress = address2  # new min address
+            nextId = pkg.package_id  # new package ID
+            print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (nextId, nextAddress, minDistance))
+            print()
+            return nextAddress, nextId, minDistance
+        elif distance < minDistance:
             minDistance = distance  # new min distance
             nextAddress = address2  # new min address
             nextId = pkg.package_id  # new package ID
@@ -55,12 +62,15 @@ def load_truck_packages(truck1, truck2, truck3):
     print()
 
 
-def deliver_truck_packages(truck, pHashTable, addressData, distanceData):
+def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
     delivered = []
     not_delivered = truck.packages
     currAddress = truck.location
     distanceTraveled = 0
-    hub = '4001 South 700 East'
+    # Time Object
+    startTime = time
+    h, m, s = startTime.split(':')
+    timeObject = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
     while len(not_delivered) > 0:
         for pkg in not_delivered:
             print('Delivered:', delivered)
@@ -68,15 +78,34 @@ def deliver_truck_packages(truck, pHashTable, addressData, distanceData):
             address, id, miles = min_distance_from(currAddress, not_delivered, pHashTable, addressData, distanceData)
             currAddress = address
             distanceTraveled += miles
+            print('Total Distance traveled:', distanceTraveled)
+            if miles == 0:
+                # update package status
+                currPkg = pHashTable.search(id)
+                currPkg.status = 'Delivered at ' + str(timeObject)
+            else:
+                # update time
+                time_passed = (miles / 18) * 60 * 60
+                dts = datetime.timedelta(seconds=int(time_passed))
+                timeObject += dts
+                print('Current time:', timeObject)
+                # update package status
+                currPkg = pHashTable.search(id)
+                currPkg.status = 'Delivered at ' + str(timeObject)
+            # print delivered package
+            print(currPkg)
+            print()
             delivered.append(id)
             not_delivered.remove(id)
-            # truck.packages.remove(id)
+            # update truck
+            truck.location = currAddress
+            truck.time = timeObject
+            truck.mileage = distanceTraveled
+            print(truck)
     print('Delivery Completed!')
     print('Delivered:', delivered)
     print('Not Delivered:', not_delivered)
-    truck.mileage = distanceTraveled
-    # print('Not Delivered:', truck.packages)
-    return '%.2f' % distanceTraveled
+    return truck.mileage
 
 
 def main():
@@ -100,41 +129,36 @@ def main():
     readCSV.load_address_data('WGUPS Address File.csv', addressData)
     # print(addressData)
 
-    # Time Object
-    startTime = '08:00:00'
-    h, m, s = startTime.split(':')
-    timeObject = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
-
     # Instantiate Truck Objects
     hub = '4001 South 700 East'
     list1 = []
     list2 = []
     list3 = []
-    truck1 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list1)
-    truck2 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list2)
-    truck3 = Truck.Truck(hub, timeObject, '', 16, 18, 0, list3)
+    truck1 = Truck.Truck(hub, '08:00:00', '08:00:00', 16, 18, 0, list1)
+    truck2 = Truck.Truck(hub, '08:00:00', '08:00:00', 16, 18, 0, list2)
+    truck3 = Truck.Truck(hub, '10:20:00', '10:20:00', 16, 18, 0, list3)
 
     # Load Packages to Trucks
     print('Loading Packages!')
     load_truck_packages(truck1, truck2, truck3)
 
     # Deliver Truck Packages
-    print('Delivery Started!')
-    print('Truck 1 miles:', deliver_truck_packages(truck1, pHashTable, addressData, distanceData))
-    t1_miles = truck1.mileage
-    # print('%.2f' % t1_miles)
+    # print('Delivery Started!')
+    # print('Truck 1 miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
+    # t1_miles = truck1.mileage
 
     # Deliver Truck Packages
     # print('Delivery Started!')
-    # print('Truck 2 miles:', deliver_truck_packages(truck2, pHashTable, addressData, distanceData))
+    # print('Truck 2 miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
     # t2_miles = truck2.mileage
-    # print('%.2f' % t2_miles)
 
     # Deliver Truck Packages
-    # print('Delivery Started!')
-    # print('Truck 3 miles:', deliver_truck_packages(truck3, pHashTable, addressData, distanceData))
+    print('Delivery Started!')
+    print('Truck 3 miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
     # t3_miles = truck3.mileage
-    # print('%.2f' % t3_miles)
+
+    # totalMiles = t1_miles + t2_miles + t3_miles
+    # print('Total Miles:', totalMiles)
 
 
 if __name__ == '__main__':
