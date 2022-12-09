@@ -144,22 +144,23 @@ def main():
     load_truck_packages(truck1, truck2, truck3)
 
     # Deliver Truck Packages
-    # print('Delivery Started!')
-    # print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
-    # t1_miles = truck1.mileage
+    print('Delivery Started!')
+    print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
+    t1_miles = truck1.mileage
 
     # Deliver Truck Packages
-    # print('Delivery Started!')
-    # print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
-    # t2_miles = truck2.mileage
+    print('Delivery Started!')
+    print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
+    t2_miles = truck2.mileage
 
     # Deliver Truck Packages
     print('Delivery Started!')
     print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
-    # t3_miles = truck3.mileage
+    print()
+    t3_miles = truck3.mileage
 
-    # totalMiles = t1_miles + t2_miles + t3_miles
-    # print('Total Miles:', totalMiles)
+    totalMiles = t1_miles + t2_miles + t3_miles
+    print('Total Miles:', totalMiles)
 
 
 if __name__ == '__main__':
