@@ -145,6 +145,53 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
     return truck.mileage
 
 
+def command_user_interface():
+    # Command UI
+    try:
+        print('What information would you like to see?')
+        print('1) Package information')
+        print('2) Truck information')
+        print('3) Exit the Program \n')
+        user_input = int(input())
+        if user_input == 3:
+            print('You have chosen to \'exit\' the program.')
+            print('Goodbye.')
+            exit()
+        elif user_input == 1:
+            print('Option 1 was selected!')
+            exit()
+        elif user_input == 2:
+            print('Option 2 was selected!')
+            exit()
+        else:
+            print('Invalid Entry \n')
+            command_user_interface()
+    except ValueError:
+        print('Invalid Entry \n')
+        command_user_interface()
+
+
+'''
+# Trucks Times
+    print('Truck Times:')
+    print('Truck 1 start time:', truck1.timeLeftHub)
+    print('Truck 1 completion time:', truck1.time)
+    print('Truck 2 start time:', truck2.timeLeftHub)
+    print('Truck 2 completion time:', truck2.time)
+    print('Truck 3 start time:', truck3.timeLeftHub)
+    print('Truck 3 completion time:', truck3.time)
+    print()
+    
+    # Total miles traveled
+    print('Truck Miles:')
+    print('Truck 1 Miles:', truck1.mileage)
+    print('Truck 2 Miles:', truck2.mileage)
+    print('Truck 3 Miles:', truck3.mileage)
+    totalMiles = truck1.mileage + truck2.mileage + truck3.mileage
+    print('Total Miles:', totalMiles)
+'''
+
+
 def main():
     # Hash table instance
     pHashTable = HashTable.ChainingHashTable()
@@ -155,16 +202,10 @@ def main():
 
     # Load Packages to Hash Table
     readCSV.load_package_data('WGUPS Package File.csv', pHashTable)
-    # readCSV.print_package_table(pHashTable)
-    # print(pHashTable.search(1))
-
     # Load Distances to 2-D List
     readCSV.load_distance_data('WGUPS Distance Table.csv', distanceData)
-    # print(distanceData)
-
     # Load Addresses to List
     readCSV.load_address_data('WGUPS Address File.csv', addressData)
-    # print(addressData)
 
     # Instantiate Truck Objects
     hub = '4001 South 700 East'
@@ -180,38 +221,16 @@ def main():
     load_truck_packages(truck1, truck2, truck3)
 
     # Deliver Truck Packages
-    print('Delivery Started!')
+    print('Truck 1 Delivery Started!')
     print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
-    t1_miles = truck1.mileage  # delivery completed @ 09:27:00
-
-    # Deliver Truck Packages
-    print('Delivery Started!')
+    print('Truck 2 Delivery Started!')
     print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
-    t2_miles = truck2.mileage  # delivery completed @ 10:51:00
-
-    # Deliver Truck Packages
-    print('Delivery Started!')
+    print('Truck 3 Delivery Started!')
     print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
     print()
-    t3_miles = truck3.mileage  # delivery completed @ 11:53:00
 
-    # Trucks Times
-    print('Truck Times:')
-    print('Truck 1 start time:', truck1.timeLeftHub)
-    print('Truck 1 completion time:', truck1.time)
-    print('Truck 2 start time:', truck2.timeLeftHub)
-    print('Truck 2 completion time:', truck2.time)
-    print('Truck 3 start time:', truck3.timeLeftHub)
-    print('Truck 3 completion time:', truck3.time)
-    print()
-
-    # Total miles traveled
-    print('Truck Miles:')
-    print('Truck 1 Miles:', truck1.mileage)
-    print('Truck 2 Miles:', truck2.mileage)
-    print('Truck 3 Miles:', truck3.mileage)
-    totalMiles = t1_miles + t2_miles + t3_miles
-    print('Total Miles:', totalMiles)
+    # Command UI
+    command_user_interface()
 
 
 if __name__ == '__main__':
