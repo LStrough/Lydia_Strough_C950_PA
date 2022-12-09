@@ -23,6 +23,7 @@ def min_distance_from(currAddress, packageList, pHashTable, addressData, distanc
     for pkgId in packageList:
         pkg = pHashTable.search(pkgId)
         address2 = pkg.address
+        # Determine distance between addresses
         distance = distance_in_between(currAddress, address2, addressData, distanceData)
         print('Package ID: %d Distance: %.1f' % (pkgId, distance))
         if distance == 0:
@@ -47,11 +48,13 @@ def load_truck_packages(truck1, truck2, truck3):
     # Must be on the SAME truck: 13, 14, 15, 16, 19, 20
     # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
     # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
+    # 10:30:00 Deadline: 1, 6, 13, 14, 16, 20, 25, 29, 30, 31, 34, 37, 40
+    # 09:00:00 Deadline: 15
 
     # Manually Load Packages to Trucks
     list1 = [1, 2, 5, 7, 10, 13, 14, 15, 16, 19, 20, 29, 33, 34, 37, 39]
-    list2 = [3, 8, 11, 12, 18, 23, 27, 35, 36, 38]
-    list3 = [4, 6, 9, 17, 21, 22, 24, 25, 26, 28, 30, 31, 32, 40]
+    list2 = [3, 6, 8, 11, 12, 18, 23, 25, 27, 30, 31, 35, 36, 38, 40]
+    list3 = [4, 9, 17, 21, 22, 24, 26, 28, 32]
     truck1.packages = list1
     truck2.packages = list2
     truck3.packages = list3
@@ -61,11 +64,33 @@ def load_truck_packages(truck1, truck2, truck3):
     print('Truck 3 is Loaded:', list3)
     print()
 
+    # print('10:30:00 Deadline:')
+    # print(pHashTable.search(1))
+    # print(pHashTable.search(6))
+    # print(pHashTable.search(13))
+    # print(pHashTable.search(14))
+    # print(pHashTable.search(16))
+    # print(pHashTable.search(20))
+    # print(pHashTable.search(25))
+    # print(pHashTable.search(29))
+    # print(pHashTable.search(30))
+    # print(pHashTable.search(31))
+    # print(pHashTable.search(34))
+    # print(pHashTable.search(37))
+    # print(pHashTable.search(40))
+    # print()
+    # print('09:00:00 Deadline:')
+    # print(pHashTable.search(15))
+
 
 def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
+    # Delivered packages list instance
     delivered = []
+    # Not delivered packages list instance
     not_delivered = truck.packages
+    # set current truck address to hub
     currAddress = truck.location
+    # Total distance traveled
     distanceTraveled = 0
     # Time Object
     startTime = time
@@ -73,7 +98,7 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
     timeObject = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
     while len(not_delivered) > 0:
         for pkg in not_delivered:
-            # update package status
+            # update package status to
             currPkg = pHashTable.search(pkg)
             currPkg.status = 'En route'
             print('Package ID:', currPkg.package_id, 'Status:', currPkg.status)
@@ -82,8 +107,10 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
             print('Delivered:', delivered)
             print('Not Delivered:', not_delivered)
             print()
+            # Determine closest address
             address, id, miles = min_distance_from(currAddress, not_delivered, pHashTable, addressData, distanceData)
             currAddress = address
+            # Update distance traveled
             distanceTraveled += miles
             print('Total Distance traveled:', distanceTraveled)
             if miles == 0:
@@ -100,7 +127,9 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
                 # update package status
                 currPkg = pHashTable.search(id)
                 currPkg.status = 'Delivered at ' + str(timeObject)
+            # add package to delivered list
             delivered.append(id)
+            # remove package from not delivered list
             not_delivered.remove(id)
             # print delivered package
             print('Package', currPkg.package_id, 'Delivered!')
@@ -143,7 +172,7 @@ def main():
     list2 = []
     list3 = []
     truck1 = Truck.Truck(hub, '08:00:00', '08:00:00', 16, 18, 0, list1)
-    truck2 = Truck.Truck(hub, '08:00:00', '08:00:00', 16, 18, 0, list2)
+    truck2 = Truck.Truck(hub, '09:05:00', '09:05:00', 16, 18, 0, list2)
     truck3 = Truck.Truck(hub, '10:20:00', '10:20:00', 16, 18, 0, list3)
 
     # Load Packages to Trucks
@@ -153,21 +182,36 @@ def main():
     # Deliver Truck Packages
     print('Delivery Started!')
     print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
-    t1_miles = truck1.mileage
+    t1_miles = truck1.mileage  # delivery completed @ 09:27:00
 
     # Deliver Truck Packages
-    # print('Delivery Started!')
-    # print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
-    # t2_miles = truck2.mileage
+    print('Delivery Started!')
+    print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
+    t2_miles = truck2.mileage  # delivery completed @ 10:51:00
 
     # Deliver Truck Packages
-    # print('Delivery Started!')
-    # print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
-    # print()
-    # t3_miles = truck3.mileage
+    print('Delivery Started!')
+    print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
+    print()
+    t3_miles = truck3.mileage  # delivery completed @ 11:53:00
 
-    # totalMiles = t1_miles + t2_miles + t3_miles
-    # print('Total Miles:', totalMiles)
+    # Trucks Times
+    print('Truck Times:')
+    print('Truck 1 start time:', truck1.timeLeftHub)
+    print('Truck 1 completion time:', truck1.time)
+    print('Truck 2 start time:', truck2.timeLeftHub)
+    print('Truck 2 completion time:', truck2.time)
+    print('Truck 3 start time:', truck3.timeLeftHub)
+    print('Truck 3 completion time:', truck3.time)
+    print()
+
+    # Total miles traveled
+    print('Truck Miles:')
+    print('Truck 1 Miles:', truck1.mileage)
+    print('Truck 2 Miles:', truck2.mileage)
+    print('Truck 3 Miles:', truck3.mileage)
+    totalMiles = t1_miles + t2_miles + t3_miles
+    print('Total Miles:', totalMiles)
 
 
 if __name__ == '__main__':
