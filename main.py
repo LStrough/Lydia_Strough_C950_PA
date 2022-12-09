@@ -145,8 +145,9 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
     return truck.mileage
 
 
-def command_user_interface():
+def command_user_interface(truck1, truck2, truck3):
     # Command UI
+    """
     try:
         print('What information would you like to see?')
         print('1) Package information')
@@ -157,10 +158,10 @@ def command_user_interface():
             print('You have chosen to \'exit\' the program.')
             print('Goodbye.')
             exit()
-        elif user_input == 1:
+        elif user_input == 1:  # Package information
             print('Option 1 was selected!')
             exit()
-        elif user_input == 2:
+        elif user_input == 2:  # Truck information
             print('Option 2 was selected!')
             exit()
         else:
@@ -169,27 +170,63 @@ def command_user_interface():
     except ValueError:
         print('Invalid Entry \n')
         command_user_interface()
+        """
 
-
-'''
-# Trucks Times
-    print('Truck Times:')
-    print('Truck 1 start time:', truck1.timeLeftHub)
-    print('Truck 1 completion time:', truck1.time)
-    print('Truck 2 start time:', truck2.timeLeftHub)
-    print('Truck 2 completion time:', truck2.time)
-    print('Truck 3 start time:', truck3.timeLeftHub)
-    print('Truck 3 completion time:', truck3.time)
-    print()
-    
-    # Total miles traveled
-    print('Truck Miles:')
-    print('Truck 1 Miles:', truck1.mileage)
-    print('Truck 2 Miles:', truck2.mileage)
-    print('Truck 3 Miles:', truck3.mileage)
-    totalMiles = truck1.mileage + truck2.mileage + truck3.mileage
-    print('Total Miles:', totalMiles)
-'''
+    try:
+        print('What information would you like to see?')
+        print('1) Package information')
+        print('2) Truck information')
+        print('3) Exit the Program \n')
+        user_input = int(input())
+        while user_input != 3:
+            if user_input == 1:  # Package information
+                print('Option 1 was selected!')
+                exit()
+            elif user_input == 2:  # Truck information
+                print('Option 2 was selected!')
+                print('What information would you like to see?')
+                print('1) All Truck miles and times?')
+                print('2) Specific Truck miles and times?')
+                print('3) Exit the Program \n')
+                user_input = int(input())
+                while user_input != 3:
+                    if user_input == 1:  # All Truck miles and times
+                        print('Option 1 was selected!')
+                        print()
+                        # Truck Times
+                        print('Truck Times:')
+                        print('Truck 1 start time:', truck1.timeLeftHub)
+                        print('Truck 1 completion time:', truck1.time)
+                        print('Truck 2 start time:', truck2.timeLeftHub)
+                        print('Truck 2 completion time:', truck2.time)
+                        print('Truck 3 start time:', truck3.timeLeftHub)
+                        print('Truck 3 completion time:', truck3.time)
+                        print()
+                        # Total miles traveled
+                        print('Truck Miles:')
+                        t1_miles = '%.1f' % truck1.mileage
+                        print('Truck 1 Miles:', t1_miles)
+                        print('Truck 2 Miles:', truck2.mileage)
+                        print('Truck 3 Miles:', truck3.mileage)
+                        totalMiles = truck1.mileage + truck2.mileage + truck3.mileage
+                        print('Total Miles:', totalMiles)
+                        exit()
+                    elif user_input == 2:  # Specific Truck miles and times
+                        print('Option 2 was selected!')
+                        exit()
+                    else:
+                        print('Invalid Entry: user input must between 1 and 3! \n')
+                        command_user_interface()
+                break
+            else:
+                print('Invalid Entry: user input must between 1 and 3! \n')
+                command_user_interface()
+        print('You have chosen to \'exit\' the program.')
+        print('Goodbye.')
+        exit()
+    except ValueError:
+        print('Invalid Entry: Incorrect data type! \n')
+        command_user_interface()
 
 
 def main():
@@ -230,7 +267,7 @@ def main():
     print()
 
     # Command UI
-    command_user_interface()
+    command_user_interface(truck1, truck2, truck3)
 
 
 if __name__ == '__main__':
