@@ -1,3 +1,6 @@
+# Author: Lydia Strough
+# Student ID: 002452624
+# Title: C950 WGUPS ROUTING PROGRAM
 import HashTable
 import Truck
 import readCSV
