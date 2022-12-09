@@ -80,6 +80,7 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
             distanceTraveled += miles
             print('Total Distance traveled:', distanceTraveled)
             if miles == 0:
+                print('Current time:', timeObject)
                 # update package status
                 currPkg = pHashTable.search(id)
                 currPkg.status = 'Delivered at ' + str(timeObject)
@@ -92,16 +93,16 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
                 # update package status
                 currPkg = pHashTable.search(id)
                 currPkg.status = 'Delivered at ' + str(timeObject)
-            # print delivered package
-            print(currPkg)
-            print()
             delivered.append(id)
             not_delivered.remove(id)
+            # print delivered package
+            print('Package', currPkg.package_id, 'Delivered!')
             # update truck
             truck.location = currAddress
             truck.time = timeObject
             truck.mileage = distanceTraveled
             print(truck)
+            print()
     print('Delivery Completed!')
     print('Delivered:', delivered)
     print('Not Delivered:', not_delivered)
@@ -144,17 +145,17 @@ def main():
 
     # Deliver Truck Packages
     # print('Delivery Started!')
-    # print('Truck 1 miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
+    # print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.timeLeftHub, pHashTable, addressData, distanceData))
     # t1_miles = truck1.mileage
 
     # Deliver Truck Packages
     # print('Delivery Started!')
-    # print('Truck 2 miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
+    # print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.timeLeftHub, pHashTable, addressData, distanceData))
     # t2_miles = truck2.mileage
 
     # Deliver Truck Packages
     print('Delivery Started!')
-    print('Truck 3 miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
+    print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.timeLeftHub, pHashTable, addressData, distanceData))
     # t3_miles = truck3.mileage
 
     # totalMiles = t1_miles + t2_miles + t3_miles
