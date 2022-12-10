@@ -90,7 +90,7 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
     # Delivered packages list instance
     delivered = []
     # Not delivered packages list instance
-    not_delivered = truck.packages
+    not_delivered = truck.packages.copy()
     # set current truck address to hub
     currAddress = truck.location
     # Total distance traveled
@@ -132,6 +132,11 @@ def deliver_truck_packages(truck, time, pHashTable, addressData, distanceData):
                 currPkg.status = 'Delivered at ' + str(timeObject)
             # add package to delivered list
             delivered.append(id)
+            currPkg = pHashTable.search(id)
+            currPkg.truck_start_time = truck.timeLeftHub
+            currPkg.delivery_time = timeObject
+
+
             # remove package from not delivered list
             not_delivered.remove(id)
             # print delivered package
@@ -183,16 +188,17 @@ def command_user_interface(truck1, truck2, truck3, pHashTable, addressData, dist
                 print('All Package information:')
                 readCSV.print_package_table(pHashTable)
                 exit()
-            elif user_input == 2:                                              # Specific Package Information (by Time)
+            elif user_input == 2:
+                # Specific Package Information (by Time)
                 print('Option 2 was selected!')
                 print('Enter a time in the HH:MM:SS format')
                 user_input = input()
                 (h, m, s) = user_input.split(':')
                 convert_user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
                 print('All Package information at time', convert_user_time)
-                # for pkg in pHashTable:
-                    # if:
-                        # print('')
+                for package_id in range(1, 41):
+                    pkg = pHashTable.search(package_id)
+                    print(pkg.print_status_for_time(convert_user_time))
                 exit()
             elif user_input == 3:
                 # Specific Package Information (by Package ID)

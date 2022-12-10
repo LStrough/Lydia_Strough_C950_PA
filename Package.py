@@ -27,6 +27,8 @@ class Package:
         self.deadline = deadline
         self.weight = weight
         self.status = status
+        self.truck_start_time = None
+        self.delivery_time = None
 
     def __str__(self):
         """
@@ -37,6 +39,19 @@ class Package:
         :returns the package description
         :rtype str
         """
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
-                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
-                 self.status))
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s %.2f Status: %s' %
+                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
+                 self.weight, self.status))
+
+    def print_status_for_time(self, requested_time):
+        status = 'At the hub'
+        if self.delivery_time > requested_time:
+            status = 'Delivered'
+        elif requested_time < self.truck_start_time:
+            status = 'At the hub'
+        else:
+            status = 'En route'
+
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s %.2f Status: %s' %
+                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
+                 self.weight, status))
