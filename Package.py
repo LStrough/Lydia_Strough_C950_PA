@@ -1,6 +1,6 @@
 """This is the Package class."""
 
-__author__ = "Lydia Strough"
+import datetime
 
 
 class Package:
@@ -39,19 +39,24 @@ class Package:
         :returns the package description
         :rtype str
         """
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s %.2f Status: %s' %
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s Weight: %.2f Status: %s' %
                 (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
                  self.weight, self.status))
 
     def print_status_for_time(self, requested_time):
         status = 'At the hub'
-        if self.delivery_time > requested_time:
-            status = 'Delivered'
-        elif requested_time < self.truck_start_time:
-            status = 'At the hub'
-        else:
-            status = 'En route'
+        truck_start_time = self.truck_start_time
+        (h, m, s) = truck_start_time.split(':')
+        convert_truck_start_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
 
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s %.2f Status: %s' %
+        if requested_time < convert_truck_start_time:
+            status = 'At the hub'
+        elif requested_time >= convert_truck_start_time:
+            if requested_time < self.delivery_time:
+                status = 'En route'
+            else:
+                status = 'Delivered at %s' % self.delivery_time
+
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s Weight: %.2f Status: %s' %
                 (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
                  self.weight, status))
