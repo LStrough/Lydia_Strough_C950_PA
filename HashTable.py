@@ -1,4 +1,6 @@
 # HashTable class using chaining.
+
+
 class ChainingHashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.

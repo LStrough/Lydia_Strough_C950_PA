@@ -1,4 +1,4 @@
-"""This is the Package class."""
+# Package class
 import datetime
 
 
@@ -26,7 +26,9 @@ class Package:
         self.deadline = deadline
         self.weight = weight
         self.status = status
+        # Truck start time
         self.truck_start_time = None
+        # Package delivery time
         self.delivery_time = None
 
     def __str__(self):
@@ -43,19 +45,27 @@ class Package:
                  self.status))
 
     def print_status_for_time(self, requested_time):
+        # Print package at specific time (requested time) method
+        # Determines package delivery status based truck start time and package delivery time
+
+        # Status initially set to 'At the hub'
         status = 'At the hub'
+        # Grabs specific truck start time (str)
         truck_start_time = self.truck_start_time
+        # Creates time object for truck start time
         (h, m, s) = truck_start_time.split(':')
         convert_truck_start_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
 
+        # Determines if the truck has left the hub
         if requested_time < convert_truck_start_time:
             status = 'At the hub'
+        # Determines whether package is currently 'En route' or if it has already delivered
         elif requested_time >= convert_truck_start_time:
             if requested_time < self.delivery_time:
                 status = 'En route'
             else:
                 status = 'Delivered at %s' % self.delivery_time
-
+        # Returns package information in the form of a string
         return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
                 (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
                  status))

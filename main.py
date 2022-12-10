@@ -1,6 +1,8 @@
 # Author: Lydia Strough
 # Student ID: 002452624
 # Title: C950 WGUPS ROUTING PROGRAM
+
+# Main file
 import HashTable
 import Truck
 import readCSV
@@ -8,53 +10,65 @@ import datetime
 
 
 def distance_in_between(add1, add2, address_data, distance_data):
+    # Distance in between two addresses method
+    # returns float distance value
+    # Distance initialized to 0
     distance = 0
+    # determines index of address string value
     h = address_data.index(add1)
+    # determines index of second address string value
     j = address_data.index(add2)
+    # Searches 2-D distance data list
+    # If value returned is '', indexes are swapped
     if distance_data[h][j] == '':
         distance = distance_data[j][h]
     else:
         distance = distance_data[h][j]
+    # Returns float distance value
     return float(distance)
 
 
 def min_distance_from(curr_address, pkg_list, hash_table, address_data, distance_data):
+    # Minimum distance method
+    # Determines which package address in list is the closest from the current address
+    # Returns the closest package address, the associated package id, and the distance b/w that address and current address
+    # Give minimum distance, next address, and next package id initial values
     min_distance = 1000
     next_address = ''
     next_id = 0
     print('Determining Closest Address!')
+    # Search package list for minimum distance
     for pkg_id in pkg_list:
+        # searches package hash table for object, based on package id from package list
         pkg = hash_table.search(pkg_id)
+        # assigns current package address to temporary value
         address2 = pkg.address
-        # Determine distance between addresses
+        # Call distance in between method
+        # Determine distance between current address and temporary package address
         distance = distance_in_between(curr_address, address2, address_data, distance_data)
         print('Package ID: %d Distance: %.1f' % (pkg_id, distance))
+        # If the temporary package address is 0 miles away, then this is the closest address
         if distance == 0:
-            min_distance = distance  # new min distance
-            next_address = address2  # new min address
-            next_id = pkg.package_id  # new package ID
+            min_distance = distance  # new minimum distance
+            next_address = address2  # new closest address
+            next_id = pkg.package_id  # package ID associated with the closest address
             print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
             print()
+            # return closest address and associated values
             return next_address, next_id, min_distance
+        # If distance is not 0, but less than current minimum distance, then new minimum is assigned
         elif distance < min_distance:
-            min_distance = distance  # new min distance
-            next_address = address2  # new min address
-            next_id = pkg.package_id  # new package ID
+            min_distance = distance  # new minimum distance
+            next_address = address2  # new closest address
+            next_id = pkg.package_id  # package ID associated with the closest address
     print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
     print()
+    # return closest address and associated values
     return next_address, next_id, min_distance
 
 
 def load_truck_packages(truck1, truck2, truck3):
-    # DELIVERY CONSTRAINTS
-    # Can only be on truck 2: 3, 18, 36, 38
-    # Must be on the SAME truck: 13, 14, 15, 16, 19, 20
-    # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
-    # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
-    # 10:30:00 Deadline: 1, 6, 13, 14, 16, 20, 25, 29, 30, 31, 34, 37, 40
-    # 09:00:00 Deadline: 15
-
-    # Manually Load Packages to Trucks
+    # Manually Load Packages to truck method
     list1 = [1, 2, 5, 7, 10, 13, 14, 15, 16, 19, 20, 29, 33, 34, 37, 39]
     list2 = [3, 6, 8, 11, 12, 18, 23, 25, 27, 30, 31, 35, 36, 38, 40]
     list3 = [4, 9, 17, 21, 22, 24, 26, 28, 32]
@@ -67,6 +81,13 @@ def load_truck_packages(truck1, truck2, truck3):
     print('Truck 3 is Loaded:', list3)
     print()
 
+    # DELIVERY CONSTRAINTS
+    # Can only be on truck 2: 3, 18, 36, 38
+    # Must be on the SAME truck: 13, 14, 15, 16, 19, 20
+    # Delayed on Flight (will not arrive to hub until 09:05:00): 6, 25, 28, 32
+    # Wrong address listed (correct address arrives at 10:20:00): 9 (correct address: 410 S State St)
+    # 10:30:00 Deadline: 1, 6, 13, 14, 16, 20, 25, 29, 30, 31, 34, 37, 40
+    # 09:00:00 Deadline: 15
     """
         print('10:30:00 Deadline:')
         print(p_hash_table.search(1))
@@ -85,10 +106,11 @@ def load_truck_packages(truck1, truck2, truck3):
         print()
         print('09:00:00 Deadline:')
         print(p_hash_table.search(15))
-        """
+    """
 
 
 def deliver_truck_packages(truck, time, hash_table, address_data, distance_data):
+    # Deliver truck packages method
     # Delivered packages list instance
     delivered = []
     # Not delivered packages list instance
@@ -97,22 +119,27 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
     curr_address = truck.location
     # Total distance traveled
     distance_traveled = 0
-    # Time Object
+    # Creates time object for truck start time
     start_time = time
     h, m, s = start_time.split(':')
     time_object = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+    # Until 'not delivered' package list is empty, packages are delivered
     while len(not_delivered) > 0:
+        # Package delivery status' are changed to 'En route'
         for pkg in not_delivered:
-            # update package status
+            # Update package status
             curr_pkg = hash_table.search(pkg)
             curr_pkg.status = 'En route'
             print('Package ID:', curr_pkg.package_id, 'Status:', curr_pkg.status)
         print()
+        # Deliver all packages based on package address distance
+        # Update distance traveled, package status, current and delivery times throughout process
         for pkg in not_delivered:
             print('Delivered:', delivered)
             print('Not Delivered:', not_delivered)
             print()
-            # Determine closest address
+            # Call minimum distance from current address method
+            # Determine the closest address
             address, pkg_id, miles = min_distance_from(curr_address, not_delivered, hash_table, address_data,
                                                        distance_data)
             curr_address = address
@@ -121,34 +148,35 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
             print('Total Distance traveled:', distance_traveled)
             if miles == 0:
                 print('Current time:', time_object)
-                # update package status
+                # Update package status
                 curr_pkg = hash_table.search(pkg_id)
                 curr_pkg.status = 'Delivered at ' + str(time_object)
             else:
-                # update time
+                # Update time
                 time_passed = (miles / 18) * 60 * 60
                 dts = datetime.timedelta(seconds=int(time_passed))
                 time_object += dts
                 print('Current time:', time_object)
-                # update package status
+                # Update package status
                 curr_pkg = hash_table.search(pkg_id)
                 curr_pkg.status = 'Delivered at ' + str(time_object)
-            # add package to delivered list
+            # Add package to delivered list
             delivered.append(pkg_id)
-            # update package start and delivery time
+            # Update package start and delivery time
             curr_pkg = hash_table.search(pkg_id)
             curr_pkg.truck_start_time = truck.time_left_hub
             curr_pkg.delivery_time = time_object
-            # remove package from not delivered list
+            # Remove package from not delivered list
             not_delivered.remove(pkg_id)
-            # print delivered package
+            # Print delivered package
             print('Package', curr_pkg.package_id, 'Delivered!')
-            # update truck
+            # Update truck information
             truck.location = curr_address
             truck.time = time_object
             truck.mileage = distance_traveled
             print(truck)
             print()
+    # All packages have been delivered. Time to return to the hub.
     # Final stop
     print('Last stop: The hub!')
     hub = '4001 South 700 East'
@@ -173,6 +201,7 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
     print('Not Delivered:', not_delivered)
     print(truck)
     print()
+    # Return final truck mileage
     return truck.mileage
 
 
@@ -243,6 +272,8 @@ def command_user_interface(truck1, truck2, truck3, hash_table, address_data, dis
 
 
 def main():
+    # Main method
+
     # Hash table instance
     p_hash_table = HashTable.ChainingHashTable()
     # Distance List instance
@@ -272,14 +303,11 @@ def main():
 
     # Deliver Truck Packages
     print('Truck 1 Delivery Started!')
-    print('Truck 1 total miles:', deliver_truck_packages(truck1, truck1.time_left_hub, p_hash_table, address_data,
-                                                         distance_data))
+    deliver_truck_packages(truck1, truck1.time_left_hub, p_hash_table, address_data, distance_data)
     print('Truck 2 Delivery Started!')
-    print('Truck 2 total miles:', deliver_truck_packages(truck2, truck2.time_left_hub, p_hash_table, address_data,
-                                                         distance_data))
+    deliver_truck_packages(truck2, truck2.time_left_hub, p_hash_table, address_data, distance_data)
     print('Truck 3 Delivery Started!')
-    print('Truck 3 total miles:', deliver_truck_packages(truck3, truck3.time_left_hub, p_hash_table, address_data,
-                                                         distance_data))
+    deliver_truck_packages(truck3, truck3.time_left_hub, p_hash_table, address_data, distance_data)
     print()
 
     # ALL Truck Information

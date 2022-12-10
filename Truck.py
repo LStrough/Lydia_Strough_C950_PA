@@ -1,4 +1,4 @@
-"""This is the Truck class."""
+# Truck class
 
 
 class Truck:
@@ -33,6 +33,6 @@ class Truck:
         :returns the truck description
         :rtype str
         """
-        return ('Truck location: %s, Current time: %s, Time Left Hub: %s, Capacity: %d, Speed: %d, Mileage: %.2f, '
+        return ('Truck Location: %s, Current time: %s, Time Left Hub: %s, Capacity: %d, Speed: %d, Mileage: %.2f, '
                 'Packages: %s ' %
                 (self.location, self.time, self.time_left_hub, self.capacity, self.speed, self.mileage, self.packages))
