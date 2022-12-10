@@ -54,5 +54,3 @@ class ChainingHashTable:
                 return print('Package ', key, 'successfully deleted.')
         # the key is not found.
         return None
-
-

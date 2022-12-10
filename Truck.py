@@ -1,7 +1,5 @@
 """This is the Truck class."""
 
-__author__ = "Lydia Strough"
-
 
 class Truck:
 
@@ -20,7 +18,7 @@ class Truck:
         """
         self.location = location
         self.time = time
-        self.timeLeftHub = time_left_hub
+        self.time_left_hub = time_left_hub
         self.capacity = capacity
         self.speed = speed
         self.mileage = mileage
@@ -37,4 +35,4 @@ class Truck:
         """
         return ('Truck location: %s, Current time: %s, Time Left Hub: %s, Capacity: %d, Speed: %d, Mileage: %.2f, '
                 'Packages: %s ' %
-                (self.location, self.time, self.timeLeftHub, self.capacity, self.speed, self.mileage, self.packages))
+                (self.location, self.time, self.time_left_hub, self.capacity, self.speed, self.mileage, self.packages))

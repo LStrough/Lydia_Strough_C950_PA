@@ -1,5 +1,4 @@
 """This is the Package class."""
-
 import datetime
 
 
@@ -39,9 +38,9 @@ class Package:
         :returns the package description
         :rtype str
         """
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s Weight: %.2f Status: %s' %
-                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
-                 self.weight, self.status))
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
+                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
+                 self.status))
 
     def print_status_for_time(self, requested_time):
         status = 'At the hub'
@@ -57,6 +56,6 @@ class Package:
             else:
                 status = 'Delivered at %s' % self.delivery_time
 
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Delivery Time: %s Weight: %.2f Status: %s' %
-                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.delivery_time,
-                 self.weight, status))
+        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
+                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
+                 status))
