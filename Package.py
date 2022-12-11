@@ -40,7 +40,7 @@ class Package:
         :returns the package description
         :rtype str
         """
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
+        return ('Package ID: %d   Address: %s, %s, %s, %s   Deadline: %s   Weight: %.2f   Delivery status: %s' %
                 (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
                  self.status))
 
