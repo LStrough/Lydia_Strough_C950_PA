@@ -65,7 +65,7 @@ class Package:
                 status = 'En route'
             else:
                 status = 'Delivered at %s' % self.delivery_time
-        # Returns package information in the form of a string
-        return ('Package ID: %d Address: %s, %s, %s, %s Deadline: %s Weight: %.2f Status: %s' %
-                (self.package_id, self.address, self.city, self.state, self.zipcode, self.deadline, self.weight,
-                 status))
+        # Returns package id, load time, and delivery status in the form of a string
+        return 'Package ID: %d     Truck load time: %s     Delivery status: %s' % \
+               (self.package_id, self.truck_start_time, status)
+
