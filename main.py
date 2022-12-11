@@ -36,7 +36,7 @@ def min_distance_from(curr_address, pkg_list, hash_table, address_data, distance
     min_distance = 1000
     next_address = ''
     next_id = 0
-    print('Determining Closest Address!')
+    # print('Determining the Closest Address!')
     # Search package list for minimum distance
     for pkg_id in pkg_list:
         # searches package hash table for object, based on package id from package list
@@ -46,14 +46,14 @@ def min_distance_from(curr_address, pkg_list, hash_table, address_data, distance
         # Call distance in between method
         # Determine distance between current address and temporary package address
         distance = distance_in_between(curr_address, address2, address_data, distance_data)
-        print('Package ID: %d Distance: %.1f' % (pkg_id, distance))
+        # print('Package ID: %d Distance: %.1f' % (pkg_id, distance))
         # If the temporary package address is 0 miles away, then this is the closest address
         if distance == 0:
             min_distance = distance  # new minimum distance
             next_address = address2  # new closest address
             next_id = pkg.package_id  # package ID associated with the closest address
-            print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
-            print()
+            # print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
+            # print()
             # return closest address and associated values
             return next_address, next_id, min_distance
         # If distance is not 0, but less than current minimum distance, then new minimum is assigned
@@ -61,8 +61,8 @@ def min_distance_from(curr_address, pkg_list, hash_table, address_data, distance
             min_distance = distance  # new minimum distance
             next_address = address2  # new closest address
             next_id = pkg.package_id  # package ID associated with the closest address
-    print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
-    print()
+    # print('Closest Package Details: ID: %d Address: %s Distance: %.1f' % (next_id, next_address, min_distance))
+    # print()
     # return closest address and associated values
     return next_address, next_id, min_distance
 
@@ -76,10 +76,10 @@ def load_truck_packages(truck1, truck2, truck3):
     truck2.packages = list2
     truck3.packages = list3
 
-    print('Truck 1 is Loaded:', list1)
-    print('Truck 2 is Loaded:', list2)
-    print('Truck 3 is Loaded:', list3)
-    print()
+    # print('Truck 1 is Loaded:', list1)
+    # print('Truck 2 is Loaded:', list2)
+    # print('Truck 3 is Loaded:', list3)
+    # print()
 
     # DELIVERY CONSTRAINTS
     # Can only be on truck 2: 3, 18, 36, 38
@@ -130,14 +130,14 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
             # Update package status
             curr_pkg = hash_table.search(pkg)
             curr_pkg.status = 'En route'
-            print('Package ID:', curr_pkg.package_id, 'Status:', curr_pkg.status)
-        print()
+            # print('Package ID:', curr_pkg.package_id, 'Status:', curr_pkg.status)
+        # print()
         # Deliver all packages based on package address distance
         # Update distance traveled, package status, current and delivery times throughout process
         for pkg in not_delivered:
-            print('Delivered:', delivered)
-            print('Not Delivered:', not_delivered)
-            print()
+            # print('Delivered:', delivered)
+            # print('Not Delivered:', not_delivered)
+            # print()
             # Call minimum distance from current address method
             # Determine the closest address
             address, pkg_id, miles = min_distance_from(curr_address, not_delivered, hash_table, address_data,
@@ -145,9 +145,9 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
             curr_address = address
             # Update distance traveled
             distance_traveled += miles
-            print('Total Distance traveled:', distance_traveled)
+            # print('Total Distance traveled:', distance_traveled)
             if miles == 0:
-                print('Current time:', time_object)
+                # print('Current time:', time_object)
                 # Update package status
                 curr_pkg = hash_table.search(pkg_id)
                 curr_pkg.status = 'Delivered at ' + str(time_object)
@@ -156,7 +156,7 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
                 time_passed = (miles / 18) * 60 * 60
                 dts = datetime.timedelta(seconds=int(time_passed))
                 time_object += dts
-                print('Current time:', time_object)
+                # print('Current time:', time_object)
                 # Update package status
                 curr_pkg = hash_table.search(pkg_id)
                 curr_pkg.status = 'Delivered at ' + str(time_object)
@@ -169,24 +169,24 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
             # Remove package from not delivered list
             not_delivered.remove(pkg_id)
             # Print delivered package
-            print('Package', curr_pkg.package_id, 'Delivered!')
+            # print('Package', curr_pkg.package_id, 'Delivered!')
             # Update truck information
             truck.location = curr_address
             truck.time = time_object
             truck.mileage = distance_traveled
-            print(truck)
-            print()
+            # print(truck)
+            # print()
     # All packages have been delivered. Time to return to the hub.
     # Final stop
-    print('Last stop: The hub!')
+    # print('Last stop: The hub!')
     hub = '4001 South 700 East'
     # Calculate distance between current truck location and the hub
     miles = distance_in_between(truck.location, hub, address_data, distance_data)
-    print('Distance to hub:', miles)
-    print('Distance traveled thus far:', distance_traveled)
+    # print('Distance to hub:', miles)
+    # print('Distance traveled thus far:', distance_traveled)
     # Update distance traveled
     distance_traveled += miles
-    print('Final truck mileage:', distance_traveled)
+    # print('Final truck mileage:', distance_traveled)
     # Update truck miles
     truck.mileage = distance_traveled
     time_passed = (miles / 18) * 60 * 60
@@ -196,79 +196,52 @@ def deliver_truck_packages(truck, time, hash_table, address_data, distance_data)
     truck.time = time_object
     # Update truck location
     truck.location = hub
-    print('Delivery Completed!')
-    print('Delivered:', delivered)
-    print('Not Delivered:', not_delivered)
-    print(truck)
-    print()
+    # print('Delivery Completed!')
+    # print('Delivered:', delivered)
+    # print('Not Delivered:', not_delivered)
+    # print(truck)
+    # print()
     # Return final truck mileage
     return truck.mileage
 
 
-def command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data):
-    try:
+def command_user_interface(truck1, truck2, truck3, hash_table):
+    user_input = 9
+    total_miles = truck1.mileage + truck2.mileage + truck3.mileage
+    while user_input != 3:
         # Command UI Main Menu
+        print('*' * 50)
+        print('Total miles: %.1f' % total_miles)
+        print('*' * 50)
         print('What information would you like to see? ')
-        print('1) Package information')
-        print('2) Exit the Program \n')
+        print('1) Specific package information')
+        print('2) All package statuses for a specific time')
+        print('3) Exit the Program \n')
         user_input = int(input())
         if user_input == 1:
-            # Package information
-            print('Option 1 was selected!')
-            print('What information would you like to see?')
-            print('1) All Package information')
-            print('2) All Package information (by Time)')
-            print('3) Specific Package information (by Package ID)')
-            print('4) Exit the Program \n')
+            # Specific Package Information (by Package ID)
+            # print('Option 1 was selected!')
+            print('Enter a Package ID number 1-40')
             user_input = int(input())
-            if user_input == 1:
-                # All Package Information
-                print('Option 1 was selected!')
-                print('All Package information:')
-                readCSV.print_package_table(hash_table)
-                print()
-                # Return to Main Menu
-                command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data)
-            elif user_input == 2:
-                # Specific Package Information (by Time)
-                print('Option 2 was selected!')
-                print('Enter a time in the HH:MM:SS format')
-                user_input = input()
-                (h, m, s) = user_input.split(':')
-                convert_user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
-                print('All Package information at time:', convert_user_time)
-                for p_id in range(1, 41):
-                    pkg = hash_table.search(p_id)
-                    print(pkg.print_status_for_time(convert_user_time))
-                print()
-                # Return to Main Menu
-                command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data)
-            elif user_input == 3:
-                # Specific Package Information (by Package ID)
-                print('Option 3 was selected!')
-                print('Enter a Package ID number 1-40')
-                user_input = int(input())
-                print('Package ID chosen:', user_input)
-                print(hash_table.search(user_input))
-                print()
-                # Return to Main Menu
-                command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data)
-            elif user_input == 4:
-                # Exit Program
-                print('You have chosen to \'exit\' the program.')
-                print('Goodbye.')
-                exit()
+            # print('Package ID chosen:', user_input)
+            print(hash_table.search(user_input))
+            print()
         elif user_input == 2:
+            # Specific Package Information (by Time)
+            # print('Option 2 was selected!')
+            print('Enter a time in the HH:MM:SS format')
+            user_input = input()
+            (h, m, s) = user_input.split(':')
+            convert_user_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+            print('All Package information at time:', convert_user_time)
+            for p_id in range(1, 41):
+                pkg = hash_table.search(p_id)
+                print(pkg.print_status_for_time(convert_user_time))
+            print()
+        elif user_input == 3:
             # Exit Program
             print('You have chosen to \'exit\' the program.')
             print('Goodbye.')
-            exit()
-        else:
-            print('Invalid Entry! \n')
-            command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data)
-    except ValueError:
-        print('Invalid Entry: Incorrect data type! \n')
-        command_user_interface(truck1, truck2, truck3, hash_table, address_data, distance_data)
 
 
 def main():
@@ -298,18 +271,21 @@ def main():
     truck3 = Truck.Truck(hub, '10:20:00', '10:20:00', 16, 18, 0, list3)
 
     # Load Packages to Trucks
-    print('Loading Packages!')
+    # print('Loading Packages!')
     load_truck_packages(truck1, truck2, truck3)
 
     # Deliver Truck Packages
-    print('Truck 1 Delivery Started!')
+    # print('Truck 1 Delivery Started!')
     deliver_truck_packages(truck1, truck1.time_left_hub, p_hash_table, address_data, distance_data)
-    print('Truck 2 Delivery Started!')
+    # print('Truck 2 Delivery Started!')
     deliver_truck_packages(truck2, truck2.time_left_hub, p_hash_table, address_data, distance_data)
-    print('Truck 3 Delivery Started!')
+    # print('Truck 3 Delivery Started!')
+    # Change package #9 delivery address
+    pkg_9 = p_hash_table.search(9)
+    pkg_9.address = '410 S State St'
     deliver_truck_packages(truck3, truck3.time_left_hub, p_hash_table, address_data, distance_data)
-    print()
 
+    """
     # ALL Truck Information
     # Truck Packages (at start)
     print('Truck Packages (at start):')
@@ -335,9 +311,10 @@ def main():
     total_miles = '%.1f' % (truck1.mileage + truck2.mileage + truck3.mileage)
     print('Total Miles:', total_miles)
     print()
+    """
 
     # Command UI
-    command_user_interface(truck1, truck2, truck3, p_hash_table, address_data, distance_data)
+    command_user_interface(truck1, truck2, truck3, p_hash_table)
 
 
 if __name__ == '__main__':
