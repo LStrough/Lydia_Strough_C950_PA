@@ -1,6 +1,6 @@
 TITLE: WGUPS Routing Program (Data Structures and Algorithms II, C950 PA)
 
-PURPOSE: A CLI Python project to create an efficient mail truck delivery route between three trucks and two drivers. 40 packages are delivered across 27 addresses. The “nearest neighbor” (greedy) algorithm determines the route.
+PURPOSE: Efficient mail truck delivery route between three trucks and two drivers. 40 packages are delivered across 27 addresses, utilizing the “nearest neighbor” (greedy) algorithm to determine the truck route. Command Line Interface (CLI) developed in PyCharm and written in Python 3. 
 
 APPLICATION VERSION & DATE: Application Version 1.0, 12/14/2022
 
